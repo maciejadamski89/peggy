@@ -1,0 +1,9 @@
+{
+	"typescript.tsdk": "node_modules\\typescript\\lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"prettier.configPath": ".prettierrc",
+	"prettier.ignorePath": ".prettierignore",
+	"eslint.nodePath": "node_modules"
+}
