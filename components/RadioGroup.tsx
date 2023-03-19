@@ -5,10 +5,9 @@ type props = {
 };
 
 export default function RadioGroup({name, options, defaultValue}: props) {
-	console.log({options});
 	return (
 		<div className="flex flex-col gap-y-3">
-			{options.map((option: string, index: number) => (
+			{options.map((option: any, index: number) => (
 				<div className="flex" key={index}>
 					<input
 						type="radio"

@@ -11,16 +11,12 @@ async function getEggs() {
 }
 
 export default async function Home() {
-	console.count();
-	console.log("RENDER GET");
 	const eggs = await getEggs();
-	console.log("EGGS");
-	console.log({eggs});
 	return (
 		<main className="flex flex-col items-center justify-center p-10 mx-auto space-y-4">
 			<Link
 				href="/eggs/insert"
-				className="inline-flex items-center justify-center gap-2 px-4 py-3 mt-10 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+				className="inline-flex justify-center px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

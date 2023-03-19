@@ -1,7 +1,7 @@
 // import ButtonDeleteEgg from "./ButtonDeleteEgg";
 import Link from "next/link";
 
-export default function EggsTable({eggs}: {eggs: any}) {
+export default function EggWeightsTable({eggs}: {eggs: any}) {
 	const convertDate = (date: string) => {
 		const localTimezoneOffset = new Date().getTimezoneOffset();
 		const localTimezoneOffsetHours = localTimezoneOffset / 60;
@@ -51,7 +51,7 @@ export default function EggsTable({eggs}: {eggs: any}) {
 	};
 
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col max-w-2xl mx-auto">
 			<div className="-m-1.5 overflow-x-auto">
 				<div className="p-1.5 min-w-full inline-block align-middle">
 					<div className="overflow-hidden">
@@ -62,31 +62,13 @@ export default function EggsTable({eggs}: {eggs: any}) {
 										scope="col"
 										className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"
 									>
-										Nazwa jaja papugi
+										Data dodania wagi
 									</th>
 									<th
 										scope="col"
 										className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"
 									>
-										Liczba dni inkubacji
-									</th>
-									<th
-										scope="col"
-										className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"
-									>
-										Data dodania
-									</th>
-									<th
-										scope="col"
-										className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"
-									>
-										Data wyłączenia tacki
-									</th>
-									<th
-										scope="col"
-										className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"
-									>
-										Data klucia
+										Waga jajka
 									</th>
 									<th
 										scope="col"
@@ -99,25 +81,11 @@ export default function EggsTable({eggs}: {eggs: any}) {
 							<tbody className="divide-y divide-gray-200 ">
 								{eggs?.map((egg: any) => (
 									<tr key={egg.id}>
-										<td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-											<Link
-												href={`/eggs/${egg.id}`}
-												className="text-indigo-600 underline hover:text-indigo-500"
-											>
-												{egg.name}
-											</Link>
-										</td>
-										<td className="px-5 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
-											{egg.incubation_days}
-										</td>
 										<td className="px-5 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
 											{convertDate(egg.created_at)}
 										</td>
 										<td className="px-5 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
-											{generateTryShutdownDate(egg.created_at, egg.incubation_days)}
-										</td>
-										<td className="px-5 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
-											{generateHatchDate(egg.created_at, egg.incubation_days)}
+											{egg.weight}
 										</td>
 										<td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
 											<button

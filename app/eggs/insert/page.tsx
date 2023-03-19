@@ -3,7 +3,6 @@ import FormEgg from "@/components/FormEgg";
 
 async function fetchParrotGenres() {
 	const {data, error} = await supabase.from("parrot-genres").select().order("name");
-	console.log({data});
 	if (error) console.error(error);
 	return data;
 }

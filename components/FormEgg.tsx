@@ -6,20 +6,40 @@ import RadioGroup from "./RadioGroup";
 import Button from "./Button";
 import Link from "next/link";
 
-export default function FormEgg({parrotGenres}) {
+export default function FormEgg({parrotGenres}: any) {
 	const [eggName, setEggName] = useState("");
+	const [initialEggWeight, setInitialEggWeight] = useState(0);
+	const [parrotGenreIncubationDays, setParrotGenreIncubationDays] = useState(0);
 
 	const router = useRouter();
 
-	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleOnChangeEggName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEggName(e.target.value);
 	};
 
+	const handleOnChangeInitialEggWeight = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInitialEggWeight(+e.target.value);
+	};
+
+	const handleOnChangeParrotGenreIncubationDays = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setParrotGenreIncubationDays(+e.target.value);
+	};
+
 	const handleOnClick = async () => {
-		console.log("click");
-		const {data: egg, error} = await supabase.from("eggs").insert({egg_name: eggName}).select().single();
+		const {data: egg, error} = await supabase
+			.from("eggs")
+			.insert({name: eggName, initial_weight: initialEggWeight, incubation_days: parrotGenreIncubationDays})
+			.select()
+			.single();
 		if (error) console.error(error);
-		if (egg) router.push("/eggs/get");
+
+		const {data: eggWeight, error: eggWeightError} = await supabase
+			.from("egg-weights")
+			.insert({egg_id: egg?.id, initial_weight: true, weight: initialEggWeight})
+			.select()
+			.single();
+		if (eggWeightError) console.error(eggWeightError);
+		if (egg && eggWeight) router.push("/eggs");
 	};
 
 	return (
@@ -52,8 +72,25 @@ export default function FormEgg({parrotGenres}) {
 										type="text"
 										name="first-name"
 										id="first-name"
-										autoComplete="given-name"
-										className="mt-2 block w-[20rem] rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+										className="mt-2 block w-[20rem] rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+										onChange={handleOnChangeEggName}
+									/>
+									<label
+										htmlFor="first-name"
+										className="block text-sm font-semibold leading-6 text-gray-900"
+									>
+										Początkowa waga jaja [g]
+									</label>
+									<p className="text-sm text-gray-500">
+										Podaj dokładną wagę jaja z dokładnością do dwóch zer po przecinku. Dla
+										przykładu: 7.74.
+									</p>
+									<input
+										type="text"
+										name="first-name"
+										id="first-name"
+										className="mt-2 block w-[20rem] rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+										onChange={handleOnChangeInitialEggWeight}
 									/>
 									<h1 className="mt-4 text-sm font-semibold leading-6 text-gray-900">
 										Wybierz typ papugi
@@ -62,7 +99,7 @@ export default function FormEgg({parrotGenres}) {
 										Każda papuga posiada różny okres inkubacji jaja
 									</p>
 									<div className="mt-4 space-y-4">
-										{parrotGenres.map((genre: string, index: number) => (
+										{parrotGenres.map((genre: any, index: number) => (
 											<div key={genre.id} className="flex items-center">
 												<input
 													id="push-everything"
@@ -70,6 +107,7 @@ export default function FormEgg({parrotGenres}) {
 													type="radio"
 													className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-600"
 													value={genre.incubation_days}
+													onChange={handleOnChangeParrotGenreIncubationDays}
 												/>
 												<label
 													htmlFor="push-everything"
@@ -82,7 +120,7 @@ export default function FormEgg({parrotGenres}) {
 									</div>
 								</div>
 								<div className="px-4 py-3 space-x-4 text-right bg-gray-50 sm:px-6">
-									<Link href="/eggs/get">
+									<Link href="/eggs">
 										<button
 											type="button"
 											className="inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -91,7 +129,7 @@ export default function FormEgg({parrotGenres}) {
 										</button>
 									</Link>
 									<button
-										type="submit"
+										type="button"
 										className="inline-flex justify-center px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
 										onClick={handleOnClick}
 									>
