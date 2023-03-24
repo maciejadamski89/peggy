@@ -1,6 +1,7 @@
 import supabase from "@/utils/supabase";
 import Link from "next/link";
 import EggsTable from "@/components/EggsTable";
+import Card from "@/components/Card";
 
 export const revalidate = 0;
 
@@ -29,7 +30,10 @@ export default async function Home() {
 					<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
 				</svg>
 			</Link>
-			<EggsTable eggs={eggs} />
+			<div className="hidden lg:block">
+				<EggsTable eggs={eggs} />
+			</div>
+			<div className="block lg:hidden">{eggs && eggs.map((egg) => <Card key={egg.id} egg={egg} />)}</div>
 		</main>
 	);
 }
