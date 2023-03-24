@@ -33,7 +33,9 @@ export default async function Home() {
 			<div className="hidden lg:block">
 				<EggsTable eggs={eggs} />
 			</div>
-			<div className="block lg:hidden">{eggs && eggs.map((egg) => <Card key={egg.id} egg={egg} />)}</div>
+			<div className="flex flex-col block gap-4 lg:hidden">
+				{eggs && eggs.map((egg) => <Card key={egg.id} egg={egg} />)}
+			</div>
 		</main>
 	);
 }
