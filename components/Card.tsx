@@ -1,4 +1,4 @@
-import {convertDate, generateHatchDate, generateTryShutdownDate} from "@/utils/functions";
+import {convertDate, generateHatchDate, generateTryShutdownDate, calculateEndEggWeight} from "@/utils/functions";
 
 export default function Card({egg}: any) {
 	return (
@@ -16,8 +16,14 @@ export default function Card({egg}: any) {
 					<p className="text-sm font-medium text-gray-500">{egg.incubation_days}</p>
 				</div>
 				<div className="py-2 mx-auto">
-					<p className="text-sm font-medium text-gray-800">Data dodania</p>
-					<p className="text-sm font-medium text-gray-500">{convertDate(egg.created_at)}</p>
+					<p className="text-sm font-medium text-gray-800">Waga początkowa</p>
+					<p className="text-sm font-medium text-gray-500">{egg.initial_weight}</p>
+				</div>
+				<div className="py-2 mx-auto">
+					<p className="text-sm font-medium text-gray-800">Waga końcowa</p>
+					<p className="text-sm font-medium text-gray-500">
+						{calculateEndEggWeight(egg.initial_weight, egg.incubation_days)}
+					</p>
 				</div>
 				<div className="py-2 mx-auto">
 					<p className="text-sm font-medium text-gray-800">Data wyłączenia tacki</p>
@@ -35,7 +41,7 @@ export default function Card({egg}: any) {
 					className="inline-flex items-center gap-2 mt-5 text-sm font-medium text-indigo-600 underline hover:text-indigo-500"
 					href={`/eggs/${egg.id}`}
 				>
-					Zobacz szczegóły klucia
+					Szczegóły
 					<svg
 						className="w-2.5 h-auto"
 						width={16}

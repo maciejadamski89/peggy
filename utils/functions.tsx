@@ -45,3 +45,8 @@ export function generateTryShutdownDate(date: string, incubationDays: number) {
 		minute: "2-digit",
 	});
 }
+
+export function calculateEndEggWeight(initialWeight: number, incubationDays: number) {
+	const weightDecreasePercentage = 15 / 100;
+	return (initialWeight - initialWeight * weightDecreasePercentage).toFixed(3);
+}

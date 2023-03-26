@@ -1,6 +1,6 @@
 // import ButtonDeleteEgg from "./ButtonDeleteEgg";
 import Link from "next/link";
-import {convertDate, generateHatchDate, generateTryShutdownDate} from "@/utils/functions";
+import {convertDate, generateHatchDate, generateTryShutdownDate, calculateEndEggWeight} from "@/utils/functions";
 
 export default function EggsTable({eggs}: {eggs: any}) {
 	return (
@@ -27,6 +27,18 @@ export default function EggsTable({eggs}: {eggs: any}) {
 										scope="col"
 										className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"
 									>
+										Waga początkowa
+									</th>
+									<th
+										scope="col"
+										className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"
+									>
+										Waga końcowa
+									</th>
+									<th
+										scope="col"
+										className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"
+									>
 										Data dodania
 									</th>
 									<th
@@ -40,12 +52,6 @@ export default function EggsTable({eggs}: {eggs: any}) {
 										className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"
 									>
 										Data klucia
-									</th>
-									<th
-										scope="col"
-										className="px-6 py-3 text-xs font-medium text-right text-gray-500 uppercase"
-									>
-										Akcje
 									</th>
 								</tr>
 							</thead>
@@ -64,6 +70,12 @@ export default function EggsTable({eggs}: {eggs: any}) {
 											{egg.incubation_days}
 										</td>
 										<td className="px-5 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
+											{egg.initial_weight}
+										</td>
+										<td className="px-5 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
+											{calculateEndEggWeight(egg.initial_weight, egg.incubation_days)}
+										</td>
+										<td className="px-5 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
 											{convertDate(egg.created_at)}
 										</td>
 										<td className="px-5 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
@@ -71,15 +83,6 @@ export default function EggsTable({eggs}: {eggs: any}) {
 										</td>
 										<td className="px-5 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
 											{generateHatchDate(egg.created_at, egg.incubation_days)}
-										</td>
-										<td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-											<button
-												type="button"
-												className="inline-flex justify-center px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-												// onClick={handleOnClick}
-											>
-												Usuń
-											</button>
 										</td>
 									</tr>
 								))}

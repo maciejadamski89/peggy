@@ -4,10 +4,14 @@ import LineChart from "@/components/LineChart";
 import EggWeightsTable from "@/components/EggWeightsTable";
 import FormEggWeight from "@/components/FormEggWeight";
 
+export const metadata = {
+	title: "Peggy - szczegóły jajka",
+};
+
 export const revalidate = 0;
 
 async function fetchEggWeights(eggId: number) {
-	const {data, error} = await supabase.from("egg-weights").select().eq("egg_id", eggId);
+	const {data, error} = await supabase.from("egg-weights").select().eq("egg_id", eggId).order("created_at");
 	if (error) console.error(error);
 	return data;
 }

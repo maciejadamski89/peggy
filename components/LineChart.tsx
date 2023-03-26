@@ -60,28 +60,28 @@ export default function LineChart({eggName, eggWeights, incubationDays}: any) {
 		labels,
 		datasets: [
 			{
-				label: "16% wilgotności",
+				label: "16% wilgotności - traci za dużo",
 				data: dataLowerLimit,
-				borderColor: "gray",
-				backgroundColor: "gray",
+				borderColor: "#db2626",
+				backgroundColor: "#db2626",
 				borderWidth: 1,
 				borderDash: [5, 5],
 				pointRadius: 0,
 			},
 			{
-				label: "14% wilgotności",
+				label: "14% wilgotności - traci za mało",
 				data: dataUpperLimit,
-				borderColor: "black",
-				backgroundColor: "black",
+				borderColor: "#0283c5",
+				backgroundColor: "#0283c5",
 				borderWidth: 1,
 				borderDash: [5, 5],
 				pointRadius: 0,
 			},
 			{
-				label: "Jajo",
+				label: eggName,
 				data: eggWeights.map((item: any) => item.weight),
-				borderColor: "indigo",
-				backgroundColor: "indigo",
+				borderColor: "#4e46e4",
+				backgroundColor: "#4e46e4",
 				borderWidth: 2,
 			},
 		],
@@ -117,11 +117,27 @@ export default function LineChart({eggName, eggWeights, incubationDays}: any) {
 			},
 		},
 		onZoom: handleZoom,
+		scales: {
+			x: {
+				title: {
+					display: true,
+					text: "Daty inkubacji",
+				},
+			},
+			y: {
+				title: {
+					display: true,
+					text: "Waga gramach",
+				},
+			},
+		},
 	};
 	return (
 		<>
 			{eggWeights.length === 1 ? (
-				<p>Dziś jest pierwszy dzień jajka. Nie posiadam jeszcze danych aby wygenerować wykres.</p>
+				<p className="text-xl font-semibold leading-6 text-gray-900">
+					Dziś jest pierwszy dzień jajka. Nie posiadam jeszcze danych aby wygenerować wykres.
+				</p>
 			) : (
 				<Line options={options} data={data} />
 			)}
